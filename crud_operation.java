@@ -11,7 +11,7 @@ public class crud_operation{
 	        int mark;
 	        Scanner sc = new Scanner(System.in);
 
-	        /*System.out.print("Enter number of students: ");
+	        System.out.print("Enter number of students: ");
 	        int n = sc.nextInt();
 	        for (int i = 0; i < n; i++) {
 	            System.out.println("Enter details for student " + (i + 1));
