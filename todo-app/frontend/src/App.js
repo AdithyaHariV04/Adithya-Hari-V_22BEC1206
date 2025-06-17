@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const BASE_URL = 'https://todo-app-wjmi.onrender.com';
+
 function App() {
   const [todos, setTodos] = useState([]);
   const [task, setTask] = useState('');
@@ -12,25 +14,25 @@ function App() {
   }, []);
 
   const fetchTodos = async () => {
-    const res = await axios.get('http://localhost:5000/api/todos');
+    const res = await axios.get(`${BASE_URL}/api/todos`);
     setTodos(res.data);
   };
 
   const addTodo = async () => {
     if (!task.trim()) return;
-    const res = await axios.post('http://localhost:5000/api/todos', { task });
+    const res = await axios.post(`${BASE_URL}/api/todos`, { task });
     setTodos([...todos, res.data]);
     setTask('');
   };
 
   const deleteTodo = async (id) => {
-    await axios.delete(`http://localhost:5000/api/todos/${id}`);
+    await axios.delete(`${BASE_URL}/api/todos/${id}`);
     setTodos(todos.filter(todo => todo._id !== id));
   };
 
   const updateTodo = async (id) => {
     if (!editText.trim()) return;
-    const res = await axios.put(`http://localhost:5000/api/todos/${id}`, {
+    const res = await axios.put(`${BASE_URL}/api/todos/${id}`, {
       task: editText,
       completed: false
     });
