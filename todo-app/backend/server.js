@@ -7,10 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/app', {
+mongoose.connect("mongodb+srv://adithyahari2022:Adivarsha04@cluster0.v9bwzfg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
   useNewUrlParser: true,
   useUnifiedTopology: true
-})
+});
+
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('Connection error:', err));
 
