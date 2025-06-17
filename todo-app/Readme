@@ -1,0 +1,51 @@
+# 📝 To-Do List App (MERN Stack)
+
+This is a simple full-stack To-Do List application built using the **MERN** stack (MongoDB, Express.js, React.js, Node.js). It allows users to add, delete, and update their tasks.
+
+## 🚀 Live Demo
+
+Check out the live version of the app here:  
+
+👉 https://todolist-pink-eta.vercel.app/
+
+## 🧱 Tech Stack
+
+- **Frontend**: React.js (Vite)
+- **Backend**: Node.js + Express.js
+- **Database**: MongoDB Atlas (Cloud-hosted)
+- **Hosting**:
+  - Frontend on [Vercel](https://vercel.com/)
+  - Backend on [Render](https://render.com/)
+
+## 📦 Features
+
+- Add new tasks
+- Delete existing tasks
+- Edit/update tasks
+- Persistent data using MongoDB
+- Fully responsive and clean UI
+
+## 🛠️ Project Setup
+
+### 🔧 Backend Setup
+
+1. Clone the repository.
+2. Navigate to the `backend` folder.
+3. Run `npm install` to install dependencies.
+4. Create a `.env` file and add your MongoDB connection string:
+   ```bash
+   MONGO_URI=your_mongodb_connection_string
+
+todo-app/
+│
+├── backend/       # Express & MongoDB API
+│   ├── routes/
+│   ├── models/
+│   └── server.js
+│
+├── frontend/      # React frontend
+│   └── src/
+│       └── App.js
+│
+└── README.md
+
