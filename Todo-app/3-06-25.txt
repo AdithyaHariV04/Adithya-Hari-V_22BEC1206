@@ -1,0 +1,37 @@
+db.products.updateOne({_id:1},{$inc:{price:799}})
+
+db.products2.updateOne({
+_id: 5
+},{
+$min: {
+   price: 499,
+   
+}
+})
+db.products2.updateMany({
+_id: 1
+},{
+$inc: {
+   price: 50,
+   "spec.ram": 4
+}
+})
+
+db.products.updateOne({_id:1},{$mul:{"storage.0":2,"storage.1":2,"storage.2":2}
+})
+
+db.products.updateone({_id:1},{$unset:{price:""}})
+db.products.updateMany({},{
+$unset:{
+	'spec.ram':""
+     }
+})
+db.products.updateMany({_id:3},{
+$unset:{
+	'storage.0': "",
+price: ""
+     }
+})
+})
+db.products.updateOne({_id:1},{$rename:{nmea:"name"}})
+db.products.updateMany{{_id:6},{$set:{price:899}},{upsert=true})
