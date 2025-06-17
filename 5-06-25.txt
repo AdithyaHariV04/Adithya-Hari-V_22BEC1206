@@ -1,0 +1,89 @@
+db.sales2.aggregate([{$group:{_id:"$item",maxquantity:{$max:"$quantity"}}}])
+db.sales.aggregate([
+    {
+        $addFields: {
+            maxValue: { $max: ["$price", "$quantity"] }
+        }
+    }
+])
+
+db.sales.aggregate([
+    {
+        $addFields: {
+            totalValue: { $multiply: ["$price", "$quantity"] }
+        }
+    },
+    {
+        $group: {
+            _id: null,
+            maxTotalValue: { $max: "$totalValue" }
+        }
+    }
+])
+
+db.sales.aggregate([
+    { $addFields: { totalValue: { $multiply: ["$price", "$quantity"] } } },
+    { $sort: { totalValue: -1 } },
+    { $limit: 1 },
+    { $project: { item: 1, totalValue: 1, _id: 0 } }
+])
+
+db.sales.aggregate([
+    {
+        $addFields: {
+            sortedValues: { $cond: { if: { $gt: ["$price", "$quantity"] }, then: ["$price", "$quantity"], else: ["$quantity", "$price"] } }
+        }
+    },
+    {
+        $addFields: {
+            secondMaxValue: { $arrayElemAt: ["$sortedValues", 1] }
+        }
+    },
+    {
+        $project: { item: 1, secondMaxValue: 1, _id: 0 }
+    }
+])
+
+db.sales.aggregate([
+  // Group by item, collect all quantities in an array
+  {
+    $group: {
+      _id: "$item",
+      quantities: { $push: "$quantity" }
+    }
+  },
+  // Sort the array in descending order and pick the second element
+  {
+    $project: {
+      _id: 0,
+      item: "$_id",
+      sortedQuantities: { $sortArray: { input: "$quantities", sortBy: -1 } }
+    }
+  },
+  {
+    $project: {
+      item: 1,
+      secondMaxQuantity: { $arrayElemAt: ["$sortedQuantities", 1] }
+    }
+  }])
+
+db.sales.aggregate([
+  {
+    $setWindowFields: {
+      partitionBy: "$item",             // Group by 'item'
+      sortBy: { quantity: -1 },         // Sort each group by quantity (descending)
+      output: {
+        rank: { $rank: {} }             // Assign rank within each group
+      }
+    }
+  },
+  {
+    $match: { rank: 2 }                 // Keep only the second highest in each group
+  },
+  {
+    $project: {
+      _id: 0,
+      item: 1,
+      price: 1,
+      size: 1,
+      quantity: 1,
